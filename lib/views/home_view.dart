@@ -132,6 +132,16 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('SawitNews'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search_rounded),
+            tooltip: 'Cari berita',
+            onPressed: _bukaPencarian,
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
@@ -250,20 +260,6 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
               ],
-            ),
-          ),
-          Material(
-            color: AppColors.surface,
-            shape: const CircleBorder(),
-            child: IconButton(
-              tooltip: 'Cari berita',
-              onPressed: _bukaPencarian,
-              icon: const Icon(Icons.search_rounded),
-              color: AppColors.textPrimary,
-              style: IconButton.styleFrom(
-                side: const BorderSide(color: AppColors.border),
-                fixedSize: const Size(46, 46),
-              ),
             ),
           ),
         ],
