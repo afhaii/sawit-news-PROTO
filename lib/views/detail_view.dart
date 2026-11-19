@@ -17,133 +17,205 @@ class DetailView extends StatelessWidget {
         : (article.description ?? 'Ringkasan berita tidak tersedia.');
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Detail Berita')),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (article.urlToImage != null)
-              NewsImage(url: article.urlToImage!, height: 240),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 22, 20, 30),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryLight,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: const Text(
-                      'TEKNOLOGI & INFORMASI',
-                      style: TextStyle(
-                        color: AppColors.primary,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 0.6,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-                  Text(
-                    article.title,
-                    style: const TextStyle(
-                      fontSize: 23,
-                      height: 1.3,
-                      fontWeight: FontWeight.w800,
-                      color: AppColors.textPrimary,
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-                  Row(
+      body: SafeArea(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 760),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 8, 20, 12),
+                  child: Row(
                     children: [
-                      const Icon(
-                        Icons.newspaper_outlined,
-                        size: 17,
-                        color: AppColors.textSecondary,
+                      IconButton(
+                        onPressed: Get.back,
+                        icon: const Icon(Icons.arrow_back_rounded),
+                        style: IconButton.styleFrom(
+                          backgroundColor: AppColors.surface,
+                          side: const BorderSide(color: AppColors.border),
+                          fixedSize: const Size(44, 44),
+                        ),
                       ),
-                      const SizedBox(width: 6),
-                      Expanded(
-                        child: Text(
-                          article.author ?? 'Sumber berita tidak tersedia',
-                          style: const TextStyle(
-                            color: AppColors.textSecondary,
-                            fontWeight: FontWeight.w600,
+                      const SizedBox(width: 12),
+                      const Text(
+                        'Detail berita',
+                        style: TextStyle(
+                          color: AppColors.textPrimary,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.fromLTRB(18, 0, 18, 30),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (article.urlToImage != null)
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(24),
+                            child: NewsImage(
+                              url: article.urlToImage!,
+                              height: 250,
+                            ),
+                          )
+                        else
+                          Container(
+                            height: 190,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryLight,
+                              borderRadius: BorderRadius.circular(24),
+                            ),
+                            child: const Icon(
+                              Icons.article_rounded,
+                              color: AppColors.primary,
+                              size: 54,
+                            ),
+                          ),
+                        const SizedBox(height: 22),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 7,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryLight,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: const Text(
+                            'TEKNOLOGI & INFORMASI',
+                            style: TextStyle(
+                              color: AppColors.primaryDark,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: 0.6,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 6),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.calendar_today_outlined,
-                        size: 15,
-                        color: AppColors.textSecondary,
-                      ),
-                      const SizedBox(width: 7),
-                      Text(
-                        DateFormatter.formatDate(article.publishedAt),
-                        style: const TextStyle(
-                          color: AppColors.textSecondary,
-                          fontSize: 12,
+                        const SizedBox(height: 15),
+                        Text(
+                          article.title,
+                          style: const TextStyle(
+                            color: AppColors.textPrimary,
+                            fontSize: 27,
+                            height: 1.23,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: -0.6,
+                          ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 17),
+                        Wrap(
+                          spacing: 16,
+                          runSpacing: 8,
+                          children: [
+                            _MetaItem(
+                              icon: Icons.newspaper_rounded,
+                              label: article.author ?? 'Sumber berita',
+                            ),
+                            _MetaItem(
+                              icon: Icons.calendar_today_rounded,
+                              label: DateFormatter.formatDate(
+                                article.publishedAt,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 22),
+                          child: Divider(color: AppColors.border),
+                        ),
+                        if (article.description?.isNotEmpty == true) ...[
+                          Text(
+                            article.description!,
+                            style: const TextStyle(
+                              color: AppColors.textPrimary,
+                              fontSize: 16,
+                              height: 1.65,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(height: 18),
+                        ],
+                        Text(
+                          isiBerita,
+                          style: const TextStyle(
+                            color: AppColors.textSecondary,
+                            fontSize: 15,
+                            height: 1.85,
+                          ),
+                        ),
+                        if (article.url != null) ...[
+                          const SizedBox(height: 25),
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryLight.withOpacity(0.55),
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Sumber berita',
+                                  style: TextStyle(
+                                    color: AppColors.primaryDark,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                                const SizedBox(height: 7),
+                                SelectableText(
+                                  article.url!,
+                                  style: const TextStyle(
+                                    color: AppColors.primaryDark,
+                                    fontSize: 12,
+                                    height: 1.45,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: Divider(),
-                  ),
-                  if (article.description != null) ...[
-                    Text(
-                      article.description!,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        height: 1.6,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                    const SizedBox(height: 18),
-                  ],
-                  Text(
-                    isiBerita,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      height: 1.8,
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-                  if (article.url != null) ...[
-                    const SizedBox(height: 22),
-                    const Text(
-                      'Tautan sumber berita:',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    SelectableText(
-                      article.url!,
-                      style: const TextStyle(
-                        color: AppColors.primary,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ],
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
+    );
+  }
+}
+
+class _MetaItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+
+  const _MetaItem({required this.icon, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 14, color: AppColors.textSecondary),
+        const SizedBox(width: 6),
+        Text(
+          label,
+          style: const TextStyle(
+            color: AppColors.textSecondary,
+            fontSize: 11,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ],
     );
   }
 }

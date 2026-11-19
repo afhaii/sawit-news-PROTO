@@ -15,42 +15,54 @@ class ErrorView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(28),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.cloud_off_rounded,
-              size: 64,
-              color: AppColors.error,
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'Berita belum dapat dimuat',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                color: AppColors.textPrimary,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 390),
+        child: Padding(
+          padding: const EdgeInsets.all(28),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 82,
+                height: 82,
+                decoration: const BoxDecoration(
+                  color: AppColors.primaryLight,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.cloud_off_rounded,
+                  size: 34,
+                  color: AppColors.primary,
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              message,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                height: 1.5,
-                color: AppColors.textSecondary,
+              const SizedBox(height: 22),
+              const Text(
+                'Berita belum dapat dimuat',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 19,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.textPrimary,
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            FilledButton.icon(
-              onPressed: onRetry,
-              icon: const Icon(Icons.refresh_rounded),
-              label: const Text('Coba Lagi'),
-            ),
-          ],
+              const SizedBox(height: 9),
+              Text(
+                message,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 13,
+                  height: 1.55,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+              const SizedBox(height: 22),
+              FilledButton.icon(
+                onPressed: onRetry,
+                icon: const Icon(Icons.refresh_rounded, size: 18),
+                label: const Text('Coba Lagi'),
+              ),
+            ],
+          ),
         ),
       ),
     );

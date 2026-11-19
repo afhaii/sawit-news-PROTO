@@ -1,5 +1,5 @@
 name: tekno_news
-description: News App Flutter bertema teknologi Indonesia menggunakan GNews, Dio, dan FutureBuilder.
+description: Aplikasi berita SawitNews berbasis Flutter menggunakan GNews, Dio, dan FutureBuilder.
 publish_to: 'none'
 version: 1.0.0+1
 

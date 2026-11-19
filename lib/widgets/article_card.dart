@@ -18,88 +18,95 @@ class ArticleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 14),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (article.urlToImage != null)
-              NewsImage(url: article.urlToImage!, height: 185),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    article.title,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 17,
-                      height: 1.35,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.textPrimary,
-                    ),
-                  ),
-                  if (article.description != null) ...[
-                    const SizedBox(height: 8),
-                    Text(
-                      article.description!,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        height: 1.5,
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                  ],
-                  const SizedBox(height: 13),
-                  Row(
+        child: Padding(
+          padding: const EdgeInsets.all(11),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: SizedBox(
+                  width: 104,
+                  height: 112,
+                  child: article.urlToImage != null
+                      ? NewsImage(url: article.urlToImage!, height: 112)
+                      : const ColoredBox(
+                          color: AppColors.primaryLight,
+                          child: Icon(
+                            Icons.article_rounded,
+                            color: AppColors.primary,
+                            size: 32,
+                          ),
+                        ),
+                ),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: SizedBox(
+                  height: 112,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Icon(
-                        Icons.newspaper_outlined,
-                        size: 15,
-                        color: AppColors.textSecondary,
+                      Text(
+                        article.author ?? 'Sumber berita',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: AppColors.primary,
+                          fontSize: 11,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
-                      const SizedBox(width: 5),
+                      const SizedBox(height: 6),
                       Expanded(
                         child: Text(
-                          article.author ?? 'Sumber berita',
-                          maxLines: 1,
+                          article.title,
+                          maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
-                            fontSize: 11,
-                            color: AppColors.textSecondary,
+                            color: AppColors.textPrimary,
+                            fontSize: 14,
+                            height: 1.3,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ),
-                      const SizedBox(width: 10),
-                      const Icon(
-                        Icons.access_time_rounded,
-                        size: 14,
-                        color: AppColors.textSecondary,
-                      ),
-                      const SizedBox(width: 4),
-                      Flexible(
-                        child: Text(
-                          DateFormatter.formatDate(article.publishedAt),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 11,
+                      const SizedBox(height: 7),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.schedule_rounded,
+                            size: 13,
                             color: AppColors.textSecondary,
                           ),
-                        ),
+                          const SizedBox(width: 4),
+                          Expanded(
+                            child: Text(
+                              DateFormatter.formatDate(article.publishedAt),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                color: AppColors.textSecondary,
+                                fontSize: 10,
+                              ),
+                            ),
+                          ),
+                          const Icon(
+                            Icons.arrow_outward_rounded,
+                            size: 15,
+                            color: AppColors.textSecondary,
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
