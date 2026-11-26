@@ -27,6 +27,12 @@ Versi ini memakai tampilan clean dan minimalis dengan referensi visual yang dibe
 - Tombol **Coba Lagi** pada tampilan error.
 - API key disimpan melalui `--dart-define-from-file` dan file lokalnya dikecualikan dari Git.
 
+## Screenshot
+
+| Halaman Utama | API Key Salah (401) | Tidak Ada Koneksi Internet |
+| :---: | :---: | :---: |
+| ![Halaman Utama](screenshot/Landing.png) | ![API Key Salah](screenshot/Api%20Key%20Salah.png) | ![Tidak Ada Internet](screenshot/Tidak%20Ada%20Internet.png) |
+
 ## 1. Persiapan proyek
 
 Jika belum memiliki proyek Flutter, buat terlebih dahulu:
